@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Makerportfolio – Lennart Grimm</title>
+  <style>
+    :root {
+      --bg: #f8faf9;
+      --surface: #ffffff;
+      --text: #1a202c;
+      --muted: #4a5568;
+      --border: #e2e8f0;
+      --accent: #00665a;
+      --accent-soft: #eef5f4;
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header (statisch, ohne Animation) */
+    header {
+      padding: 64px 0 40px;
+      border-bottom: 1px solid var(--border);
+      background-color: var(--surface);
+    }
+
+    .header-kicker {
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    /* Sektionen */
+    main {
+      padding: 48px 0 80px;
+    }
+
+    section {
+      margin-bottom: 64px;
+    }
+
+    section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .section-header h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Featured Projects Grid */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .thumb {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background-color: #e6eceb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .card p {
+      font-size: 0.94rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    /* Tags */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background-color: var(--accent-soft);
+      color: var(--accent);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .card-link {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      align-self: flex-start;
+    }
+
+    .card-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Filter-Leiste */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+
+    /* Archiv Grid (kompakter) */
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .archive-grid .thumb {
+      aspect-ratio: 16 / 9;
+    }
+
+    .archive-grid .card-body {
+      padding: 16px;
+    }
+
+    .archive-grid h3 {
+      font-size: 1.02rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      background-color: var(--surface);
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="header-kicker">Makerportfolio</div>
+      <h1>Lennart Grimm</h1>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ==================== FEATURED PROJECTS ==================== -->
+    <section id="featured">
+      <div class="section-header">
+        <h2>Ausgewählte Projekte</h2>
+      </div>
+
+      <div class="featured-grid">
+
+        <!-- Projekt 1 -->
+        <article class="card">
+          <div class="thumb">
+            <!-- Bild einsetzen: <img src="assets/projekt-1.jpg" alt="Projekt 1"> -->
+            [Bild-Platzhalter 16:10]
+          </div>
+          <div class="card-body">
+            <div class="card-meta">JJJJ</div>
+            <h3>[Projekttitel 1]</h3>
+            <p>[Kurzbeschreibung des Projekts: Problemstellung, technischer Ansatz und Ergebnis in 2–3 Sätzen.]</p>
+            <div class="tags">
+              <span class="tag">[Tag 1]</span>
+              <span class="tag">[Tag 2]</span>
+              <span class="tag">[Tag 3]</span>
+            </div>
+            <a class="card-link" href="#">Details ansehen &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Projekt 2 -->
+        <article class="card">
+          <div class="thumb">
+            <!-- Bild einsetzen: <img src="assets/projekt-2.jpg" alt="Projekt 2"> -->
+            [Bild-Platzhalter 16:10]
+          </div>
+          <div class="card-body">
+            <div class="card-meta">JJJJ</div>
+            <h3>[Projekttitel 2]</h3>
+            <p>[Kurzbeschreibung des Projekts: Problemstellung, technischer Ansatz und Ergebnis in 2–3 Sätzen.]</p>
+            <div class="tags">
+              <span class="tag">[Tag 1]</span>
+              <span class="tag">[Tag 2]</span>
+              <span class="tag">[Tag 3]</span>
+            </div>
+            <a class="card-link" href="#">Details ansehen &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Projekt 3 -->
+        <article class="card">
+          <div class="thumb">
+            <!-- Bild einsetzen: <img src="assets/projekt-3.jpg" alt="Projekt 3"> -->
+            [Bild-Platzhalter 16:10]
+          </div>
+          <div class="card-body">
+            <div class="card-meta">JJJJ</div>
+            <h3>[Projekttitel 3]</h3>
+            <p>[Kurzbeschreibung des Projekts: Problemstellung, technischer Ansatz und Ergebnis in 2–3 Sätzen.]</p>
+            <div class="tags">
+              <span class="tag">[Tag 1]</span>
+              <span class="tag">[Tag 2]</span>
+              <span class="tag">[Tag 3]</span>
+            </div>
+            <a class="card-link" href="#">Details ansehen &rarr;</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ==================== PROJEKTARCHIV ==================== -->
+    <section id="archive">
+      <div class="section-header">
+        <h2>Projektarchiv</h2>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">Alle</button>
+          <button class="filter-btn" data-filter="cad">CAD &amp; Mechanik</button>
+          <button class="filter-btn" data-filter="embedded">Embedded &amp; Elektronik</button>
+          <button class="filter-btn" data-filter="fertigung">Fertigung &amp; Handwerk</button>
+        </div>
+      </div>
+
+      <div class="archive-grid">
+
+        <!-- Archiv-Eintrag 1 -->
+        <article class="card archive-item" data-category="cad fertigung">
+          <div class="thumb">[Bild-Platzhalter]</div>
+          <div class="card-body">
+            <div class="card-meta">JJJJ</div>
+            <h3>[Archiv-Projekt 1]</h3>
+            <p>[Kompakte Beschreibung in 1–2 Sätzen.]</p>
+            <div class="tags">
+              <span class="tag">CAD</span>
+              <span class="tag">3D-Druck</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Archiv-Eintrag 2 -->
+        <article class="card archive-item" data-category="embedded">
+          <div class="thumb">[Bild-Platzhalter]</div>
+          <div class="card-body">
+            <div class="card-meta">JJJJ</div>
+            <h3>[Archiv-Projekt 2]</h3>
+            <p>[Kompakte Beschreibung in 1–2 Sätzen.]</p>
+            <div class="tags">
+              <span class="tag">Embedded</span>
+              <span class="tag">C++</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Archiv-Eintrag 3 -->
+        <article class="card archive-item" data-category="fertigung">
+          <div class="thumb">[Bild-Platzhalter]</div>
+          <div class="card-body">
+            <div class="card-meta">JJJJ</div>
+            <h3>[Archiv-Projekt 3]</h3>
+            <p>[Kompakte Beschreibung in 1–2 Sätzen.]</p>
+            <div class="tags">
+              <span class="tag">Fertigung</span>
+              <span class="tag">Metallbau</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Archiv-Eintrag 4 -->
+        <article class="card archive-item" data-category="cad embedded">
+          <div class="thumb">[Bild-Platzhalter]</div>
+          <div class="card-body">
+            <div class="card-meta">JJJJ</div>
+            <h3>[Archiv-Projekt 4]</h3>
+            <p>[Kompakte Beschreibung in 1–2 Sätzen.]</p>
+            <div class="tags">
+              <span class="tag">CAD</span>
+              <span class="tag">Elektronik</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>&copy; 2026 Lennart Grimm</span>
+      <span>
+        <a href="mailto:[deine-email@beispiel.de]">[E-Mail-Platzhalter]</a> &middot;
+        <a href="https://github.com/Digitalmaker55" target="_blank" rel="noopener">GitHub</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.archive-item');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        items.forEach(item => {
+          const categories = item.dataset.category.split(' ');
+          item.classList.toggle('hidden', filter !== 'all' && !categories.includes(filter));
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
