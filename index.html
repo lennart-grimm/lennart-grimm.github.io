@@ -825,6 +825,33 @@
         modal.querySelectorAll('video').forEach(v => v.pause());
       });
     });
+	// Unsichtbarer Besucher-Tracker (1x pro Session, ignoriert lokale Vorschau)
+    (function () {
+      const host = location.hostname;
+      if (!host || host === 'localhost' || host === '127.0.0.1') return;
+
+      if (new URLSearchParams(location.search).get('notrack') === '1') {
+        localStorage.setItem('ignore_self', '1');
+        return;
+      }
+      if (localStorage.getItem('ignore_self') === '1') return;
+      if (sessionStorage.getItem('visit_logged')) return;
+
+      const TRACKER_URL = https://site-ping.lennart-grimm-2006.workers.dev/;
+      const payload = JSON.stringify({
+        ref: document.referrer || 'Direktaufruf',
+        path: location.pathname
+      });
+
+      try {
+        sessionStorage.setItem('visit_logged', '1');
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon(TRACKER_URL, payload);
+        } else {
+          fetch(TRACKER_URL, { method: 'POST', body: payload, keepalive: true, mode: 'no-cors' });
+        }
+      } catch (e) {}
+    })();
   </script>
 
 </body>
