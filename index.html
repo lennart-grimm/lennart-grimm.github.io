@@ -837,7 +837,7 @@
       if (localStorage.getItem('ignore_self') === '1') return;
       if (sessionStorage.getItem('visit_logged')) return;
 
-      const TRACKER_URL = https://site-ping.lennart-grimm-2006.workers.dev/;
+      const TRACKER_URL = 'https://site-ping.lennart-grimm-2006.workers.dev/';
       const payload = JSON.stringify({
         ref: document.referrer || 'Direktaufruf',
         path: location.pathname
